@@ -1,0 +1,33 @@
+[package]
+name = "client"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[[bin]]
+name = "client"
+path = "src/main.rs"
+
+
+[dependencies]
+ggegui = {git = "https://github.com/Bowarc/ggegui"}
+ggez = "0.9.3"
+log = "0.4.20"
+enum_dispatch = "0.3.12"
+derivative = "2.2.0"
+serde = { version = "1.0.188", features = ["derive"] }
+hashbrown = "0.14.0"
+ron = "0.8.1"
+thiserror = "1.0.48"
+logger = {git = "https://github.com/Bowarc/Crates.git", package = "logger"}
+time = {git = "https://github.com/Bowarc/Crates.git", package = "time"}
+random = {git = "https://github.com/Bowarc/Crates.git", package = "random"}
+mem = {git = "https://github.com/Bowarc/Crates.git", package = "mem"}
+triple_buffer = {git = "https://github.com/Bowarc/triple-buffer"}
+enum_variant_name = {git = "https://github.com/Bowarc/Crates.git", package = "enum_variant_name"}
+osu_format = "0.1.1"
+rust-embed = "8.2.0"
+threading = {git = "https://github.com/Bowarc/Crates.git", package = "threading"}
+spin_sleep = "1.2.0"
+
