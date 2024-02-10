@@ -73,7 +73,7 @@ impl SoundBank {
             }
         };
 
-        builded.set_volume(0.2);
+        builded.set_volume(0.01);
 
         builded.play(audio_ctx)?;
 

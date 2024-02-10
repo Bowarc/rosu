@@ -7,6 +7,7 @@ fn osu() {
     // println!("{:?}", reader.lines().next());
 
     // panic!("");
+    
     let mut p = osu_format::Parser::new(reader.lines());
     let data = p.parse().unwrap();
 

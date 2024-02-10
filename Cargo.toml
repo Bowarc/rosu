@@ -1,14 +1,17 @@
 [package]
-name = "client"
+name = "rosu"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [[bin]]
-name = "client"
+name = "rosu"
 path = "src/main.rs"
 
+
+[profile.dev.package."*"]
+opt-level = 3
 
 [dependencies]
 ggegui = {git = "https://github.com/Bowarc/ggegui"}
@@ -26,7 +29,7 @@ random = {git = "https://github.com/Bowarc/Crates.git", package = "random"}
 mem = {git = "https://github.com/Bowarc/Crates.git", package = "mem"}
 triple_buffer = {git = "https://github.com/Bowarc/triple-buffer"}
 enum_variant_name = {git = "https://github.com/Bowarc/Crates.git", package = "enum_variant_name"}
-osu_format = "0.1.1"
+# osu_format = "0.1.1"
 rust-embed = "8.2.0"
 threading = {git = "https://github.com/Bowarc/Crates.git", package = "threading"}
 spin_sleep = "1.2.0"

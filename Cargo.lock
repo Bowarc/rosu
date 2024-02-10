@@ -447,31 +447,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4bfbf56724aa9eca8afa4fcfadeb479e722935bb2a0900c2d37e0cc477af0688"
 
 [[package]]
-name = "client"
-version = "0.1.0"
-dependencies = [
- "derivative",
- "enum_dispatch",
- "enum_variant_name",
- "ggegui",
- "ggez",
- "hashbrown 0.14.3",
- "log",
- "logger",
- "mem",
- "osu_format",
- "random",
- "ron",
- "rust-embed",
- "serde",
- "spin_sleep",
- "thiserror",
- "threading",
- "time",
- "triple_buffer",
-]
-
-[[package]]
 name = "codespan-reporting"
 version = "0.11.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1971,12 +1946,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "osu_format"
-version = "0.1.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e50dcab8fa92b1ba0f7af9b6491dae1e54fc44d179903b346c7a3ea155a0f455"
-
-[[package]]
 name = "owned_ttf_parser"
 version = "0.20.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2247,6 +2216,30 @@ dependencies = [
  "bitflags 2.4.2",
  "serde",
  "serde_derive",
+]
+
+[[package]]
+name = "rosu"
+version = "0.1.0"
+dependencies = [
+ "derivative",
+ "enum_dispatch",
+ "enum_variant_name",
+ "ggegui",
+ "ggez",
+ "hashbrown 0.14.3",
+ "log",
+ "logger",
+ "mem",
+ "random",
+ "ron",
+ "rust-embed",
+ "serde",
+ "spin_sleep",
+ "thiserror",
+ "threading",
+ "time",
+ "triple_buffer",
 ]
 
 [[package]]

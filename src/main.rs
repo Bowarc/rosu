@@ -14,6 +14,7 @@ mod render;
 mod ui;
 mod utils;
 mod maths;
+mod osu_format;
 
 struct Rosu {
     cfg: config::Config,

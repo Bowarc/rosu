@@ -1,10 +1,10 @@
 use std::io::BufRead;
 pub struct Playing {
     time_since_start: f64,
-    meta: osu_format::BeatmapMetadata,
-    difficulty: osu_format::BeatmapDifficulty,
-    next_objects: Vec<osu_format::HitObject>,
-    current_objects: Vec<osu_format::HitObject>,
+    meta: crate::osu_format::BeatmapMetadata,
+    difficulty: crate::osu_format::BeatmapDifficulty,
+    next_objects: Vec<crate::game::object::Object>,
+    current_objects: Vec<crate::game::object::Object>,
 }
 
 impl Playing {
@@ -18,15 +18,20 @@ impl Playing {
         // println!("{:?}", reader.lines().next());
 
         // panic!("");
-        let mut p = osu_format::Parser::new(reader.lines());
+        let mut p = crate::osu_format::Parser::new(reader.lines());
         let data = p.parse().unwrap();
         debug!("Creating Playing State");
         debug!("{:#?}", data.general);
         debug!("{:#?}", data.metadata);
         debug!("{:#?}", data.difficulty);
+        debug!("{:?}", data.hit_objects.get(74).unwrap());
         Self {
-            time_since_start: -(data.general.preview_time as f64)* 0.01,
-            next_objects: data.hit_objects,
+            time_since_start: -(data.general.preview_time as f64) * 0.01,
+            next_objects: data
+                .hit_objects
+                .iter()
+                .map(|ho| crate::game::object::Object::new(ho.clone(), data.difficulty.circle_size))
+                .collect::<Vec<crate::game::object::Object>>(),
             meta: data.metadata,
             difficulty: data.difficulty,
             current_objects: vec![],
@@ -35,22 +40,32 @@ impl Playing {
 }
 
 impl super::StateMachine for Playing {
-    fn update(mut self, _ggctx: &mut ggez::Context, _sound_bank: &mut crate::assets::sound::SoundBank, delta_time: f64, ) -> super::State {
-        self.time_since_start += delta_time * 1000.;
+    fn update(
+        mut self,
+        _ggctx: &mut ggez::Context,
+        _sound_bank: &mut crate::assets::sound::SoundBank,
+        dt: f64,
+    ) -> super::State {
+        self.time_since_start += dt * 1000.;
 
         if let Some(nxt_obj) = self.next_objects.first() {
             if (nxt_obj.base().time) as f64 <= self.time_since_start {
                 let obj = self.next_objects.remove(0);
                 debug!("Adding object: {obj:?}");
                 self.current_objects.push(obj);
-            }else{
-                debug!("Next object in: {}", (nxt_obj.base().time) as f64 - self.time_since_start);
+            } else {
+                debug!(
+                    "Next object in: {}",
+                    (nxt_obj.base().time) as f64 - self.time_since_start
+                );
             }
         }
 
-        while self.current_objects.len() > 4 {
-            self.current_objects.remove(0);
+        for obj in  self.current_objects.iter_mut(){
+            obj.update(dt);
         }
+
+        self.current_objects.retain(|obj| !obj.is_dead());
 
         self.into()
     }
@@ -67,19 +82,7 @@ impl super::StateMachine for Playing {
         // debug!("{scale:?}");
 
         for obj in &self.current_objects {
-            render_request.add(
-                ggez::graphics::Mesh::new_circle(
-                    ggctx,
-                    ggez::graphics::DrawMode::stroke(1.),
-                    crate::maths::Point::new(obj.base().x.into(), obj.base().y.into()) * scale,
-                    self.difficulty.circle_size * 5. * ((scale.x + scale.y) / 2.) as f32,
-                    0.1,
-                    crate::render::Color::WHITE.into(),
-                )
-                .unwrap(),
-                crate::render::DrawParam::default(),
-                crate::render::Layer::Game,
-            )
+            obj.draw(ggctx, render_request, scale)
         }
 
         self.into()

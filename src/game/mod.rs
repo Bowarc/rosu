@@ -1,4 +1,5 @@
 mod state;
+mod object;
 use state::State;
 
 pub struct Game {
