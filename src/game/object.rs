@@ -32,21 +32,23 @@ impl Object {
         window_scale: crate::maths::Point,
     ) {
         // basic node
-        render_request.add(
-            ggez::graphics::Mesh::new_circle(
-                ggctx,
-                ggez::graphics::DrawMode::stroke(1.),
-                crate::maths::Point::new(self.base().x.into(), self.base().y.into()) * window_scale,
-                self.size * 5. * ((window_scale.x + window_scale.y) / 2.) as f32,
-                0.1,
-                crate::render::Color::WHITE.into(),
-            )
-            .unwrap(),
-            crate::render::DrawParam::default(),
-            crate::render::Layer::Game,
-        );
+
         match &self.inner {
-            crate::osu_format::HitObject::Circle { base } => {}
+            crate::osu_format::HitObject::Circle { base } => {
+                render_request.add(
+                    ggez::graphics::Mesh::new_circle(
+                        ggctx,
+                        ggez::graphics::DrawMode::stroke(1.),
+                        crate::maths::Point::new(self.base().x.into(), self.base().y.into()) * window_scale,
+                        self.size * 5. * ((window_scale.x + window_scale.y) / 2.) as f32,
+                        0.1,
+                        crate::render::Color::WHITE.into(),
+                    )
+                    .unwrap(),
+                    crate::render::DrawParam::default(),
+                    crate::render::Layer::Game,
+                );
+            }
             crate::osu_format::HitObject::Slider {
                 base: _,
                 curve_points,
@@ -55,6 +57,19 @@ impl Object {
                 edge_hitsound: _,
                 edge_addition: _,
             } => {
+                render_request.add(
+                    ggez::graphics::Mesh::new_circle(
+                        ggctx,
+                        ggez::graphics::DrawMode::stroke(1.),
+                        crate::maths::Point::new(self.base().x.into(), self.base().y.into()) * window_scale,
+                        self.size * 5. * ((window_scale.x + window_scale.y) / 2.) as f32,
+                        0.1,
+                        crate::render::Color::WHITE.into(),
+                    )
+                    .unwrap(),
+                    crate::render::DrawParam::default(),
+                    crate::render::Layer::Game,
+                );
                 for (i, curve_point) in curve_points.iter().enumerate() {
                     let last_pt = if i == 0 {
                         (self.base().x, self.base().y)
@@ -96,9 +111,23 @@ impl Object {
                     );
                 }
             }
-            crate::osu_format::HitObject::Spinner { base, end_time } => todo!(),
+            crate::osu_format::HitObject::Spinner { base, end_time } =>{
+                render_request.add(
+                    ggez::graphics::Mesh::new_circle(
+                        ggctx,
+                        ggez::graphics::DrawMode::stroke(1.),
+                        crate::maths::Point::new(self.base().x.into(), self.base().y.into()) * window_scale,
+                        self.size * 15. * ((window_scale.x + window_scale.y) / 2.) as f32,
+                        0.1,
+                        crate::render::Color::WHITE.into(),
+                    )
+                    .unwrap(),
+                    crate::render::DrawParam::default(),
+                    crate::render::Layer::Game,
+                );
+            },
             _ => {
-                unimplemented!("")
+                unimplemented!()
             }
         }
     }

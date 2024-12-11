@@ -9,9 +9,9 @@ pub struct Playing {
 
 impl Playing {
     pub fn new(sound_bank: &mut crate::assets::sound::SoundBank) -> Self {
-        sound_bank.request_play(crate::assets::sound::SoundId::HighScore);
+        sound_bank.request_play(crate::assets::sound::SoundId::RoadOfResistance);
         let f = std::fs::File::open(
-            "resources/Panda_Eyes_&_Teminite_-_Highscore_(Fort)_[Game_Over].osu",
+            "resources/BABYMETAL - Road of Resistance (Monstrata) [Rebellion].osu",
         )
         .unwrap();
         let reader = std::io::BufReader::new(f);

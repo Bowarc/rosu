@@ -359,7 +359,7 @@ where
                 sample_set: i32::from_str(values[4]).unwrap(),
                 volume: i32::from_str(values[5]).unwrap(),
                 inherited: !parse_bool(values[6]).unwrap(),
-                kiai_mode: parse_bool(values[7]).unwrap(),
+                kiai_mode: false,
             });
         }
 

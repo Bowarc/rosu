@@ -2,5 +2,6 @@
 pub enum SoundId {
     #[default]
     None,
-    HighScore
+    HighScore,
+    RoadOfResistance
 }
